@@ -1,15 +1,29 @@
-name: Newman Run
+name: Newman API Tests
 
-on:
+on: 
   workflow_dispatch:
-
-jobs:
-  newman:
+  
+jobs: 
+  test: 
+    defaults: 
+      run: 
+        working-directory: ./tests
+    environment: staging
+    name: "Run tests"
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: matt-ball/newman-action@master
-        with:
-          apiKey: PMAK-67a4d0161adbed000102f2ba-67fecb258502b1b43e472a3b3627bf2163
-          collection: 41007261-abc178f9-33c7-44d5-bb1f-6facd52101d9
-          environment: 41007261-2f477052-08e1-4929-985c-84a1b77a1213
+    steps: 
+      - 
+        uses: actions/checkout@v2
+      - 
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "18"
+      - 
+        name: "Install newman"
+        run: "npm install -g newman"
+      - 
+        name: "Install newman reporter"
+        run: "npm install -g newman-reporter-htmlextra"
+      - 
+        name: "Run tests"
+        run: "newman run https://api.getpostman.com/collections/41007261-abc178f9-33c7-44d5-bb1f-6facd52101d9?apikey=PMAK-67a4d0161adbed000102f2ba-50ce775b8aaf63936d7460d724ea8ad5dd -e https://api.getpostman.com/environments/41007261-2f477052-08e1-4929-985c-84a1b77a1213?apikey=PMAK-67a4d0161adbed000102f2ba-50ce775b8aaf63936d7460d724ea8ad5dd -r htmlextra --reporter-htmlextra-export htmlreport.html --reporter-htmlextra-darkTheme  > runreport1.html"
