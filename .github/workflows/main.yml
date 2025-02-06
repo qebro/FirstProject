@@ -23,3 +23,10 @@ jobs:
       - 
         name: "Run tests"
         run: "newman run https://api.getpostman.com/collections/41007261-abc178f9-33c7-44d5-bb1f-6facd52101d9?apikey=PMAK-67a4d0161adbed000102f2ba-50ce775b8aaf63936d7460d724ea8ad5dd -e https://api.getpostman.com/environments/41007261-2f477052-08e1-4929-985c-84a1b77a1213?apikey=PMAK-67a4d0161adbed000102f2ba-50ce775b8aaf63936d7460d724ea8ad5dd -r htmlextra --reporter-htmlextra-export htmlreport.html --reporter-htmlextra-darkTheme  > runreport1.html"
+      - 
+        name: "Publish report"
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: newman-execution-report
+          path: /
