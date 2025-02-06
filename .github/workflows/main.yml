@@ -1,6 +1,7 @@
 name: Newman Run
 
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   newman:
